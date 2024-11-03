@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jatim Park III - Observasi Tiket</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .header-transition {
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .bg-transition {
+            transition: background-image 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header id="header" class="text-white py-4 header-transition fixed w-full top-0 left-0 bg-blue-600 md:bg-transparent z-10">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-2xl font-bold">JATIM PARK III</h1>
+            <button id="menuToggle" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <nav id="navbar" class="hidden md:flex md:items-center">
+                <a href="#about" class="px-3 hover:underline">About</a>
+                <a href="#observasi" id="observasiLink" class="px-3 hover:underline">Observasi</a>
+            </nav>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden hidden bg-blue-600"><br>
+            <a href="#about" class="block px-4 py-2 hover:underline">About</a>
+            <a href="#observasi" id="observasiLink" class="block px-4 py-2 hover:underline">Observasi</a>
+        </div>
+    </header>
+
+    <main class="w-full"> 
+        <section id="about" class="bg-cover bg-center text-center text-white bg-transition" style="background-image: url('./assets/img/bg1.jpg'); height: 100vh;">
+            <div class="absolute inset-0 bg-black opacity-50 h-full"></div>
+            <div class="py-20 flex flex-col items-center justify-center h-full relative">
+                <h2 class="text-4xl font-bold">Tour in Jatim Park III</h2>
+                <p class="mt-12">
+                    Jatim Park III adalah destinasi wisata yang menggabungkan hiburan dan pendidikan dalam satu tempat.<br> 
+                    Dengan berbagai wahana menarik seperti Dino Park, The Legend Stars,<br> dan pertunjukan interaktif yang memukau, 
+                    Anda dan keluarga akan menemukan pengalaman yang tak terlupakan.<br> 
+                    Jatim Park III tidak hanya menyajikan kesenangan, tetapi juga pengetahuan,<br> 
+                    menjadikan setiap kunjungan penuh dengan kebahagiaan dan pembelajaran.<br> 
+                    Ayo, rencanakan kunjungan Anda dan buatlah kenangan manis di tempat yang menakjubkan ini!
+                </p>
+                <a href="#observasi" id="observasiLinkk" class="mt-32">
+                    <button class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition duration-200">
+                        Observasi Sekarang
+                    </button>
+                </a>
+            </div>
+        </section>              
+
+        <section id="observasi" class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center min-h-screen">
+            <h2 class="text-2xl text-center font-bold mb-4">Observasi JATIM PARK III</h2>
+            <form id="observasiForm" class="w-full">
+                <label for="observerName" class="block text-gray-600 mb-2">Nama Lengkap:</label>
+                <input type="text" id="observerName" name="observerName" class="border border-gray-300 rounded-lg w-full py-2 px-3 mb-4" required>
+                
+                <label for="whatsapp" class="block text-gray-600 mb-2">Nomor Whatsapp:</label>
+                <input type="number" id="whatsapp" name="whatsapp" class="border border-gray-300 rounded-lg w-full py-2 px-3 mb-4" required>
+            
+                <label for="observationDate" class="block text-gray-600 mb-2">Tanggal Observasi:</label>
+                <input type="date" id="observationDate" name="observationDate" class="border border-gray-300 rounded-lg w-full py-2 px-3 mb-4" required>
+            
+                <label for="ticketQuantity" class="block text-gray-600 mb-2">Jumlah Tiket:</label>
+                <input type="number" id="ticketQuantity" name="quantity" min="1" class="border border-gray-300 rounded-lg w-full py-2 px-3 mb-4" value="1" required>
+            
+                <label for="observationNotes" class="block text-gray-600 mb-2">Catatan Observasi:</label>
+                <textarea id="observationNotes" name="observationNotes" rows="4" class="border border-gray-300 rounded-lg w-full py-2 px-3 mb-4" placeholder="Tulis catatan observasi Anda di sini... (opsional)" required></textarea>
+            
+                <button type="button" onclick="submitObservationForm()" class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">
+                    Submit Observasi
+                </button>
+            </form>            
+        </section>
+        
+        <div id="detailObservasi" class="hidden bg-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center min-h-screen">
+            <h2 class="text-2xl text-center font-bold mb-4">Detail Observasi</h2>
+            <div class="mt-8 flex flex-row justify-between items-start">
+                <div id="observasiDetail" class="text-gray-600 w-1/2"></div>
+                <div class="w-1/2 flex flex-col items-center">
+                    <div class="text-center mb-2 text-gray-800 font-semibold">Pembayaran via QRIS</div>
+                    <img id="qrCodeImage" src="./assets/img/qr-code.png" height="300px" width="300px" alt="QR Code">
+                    <div id="totalHarga" class="text-center mb-2 text-gray-800 font-semibold"></div>
+                </div>
+            </div>
+        
+            <form id="uploadProofForm" class="mt-8 w-full flex flex-col items-center">
+                <label for="proofPayment" class="text-gray-700 mb-2 font-semibold">Unggah Bukti Pembayaran:</label>
+                <input type="file" id="proofPayment" name="proofPayment" accept="image/*" class="mb-4 p-2 border border-gray-300 rounded-lg" required>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+                    Kirim Bukti Pembayaran
+                </button>
+            </form>
+        </div>                              
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; 2024 JATIM PARK III. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script> 
+</body>
+</html>
